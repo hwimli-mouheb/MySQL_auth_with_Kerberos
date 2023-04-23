@@ -56,7 +56,7 @@ getent hosts
 
 - kdc getent
 
-kdc getent image
+![](screenshots/ipAddressesKDC.png)
 - client getent
 
 client getent image
