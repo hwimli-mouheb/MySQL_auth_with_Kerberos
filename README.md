@@ -19,7 +19,7 @@ The KDC has three main components:
 
 ### Machines setup
 
-In order to achieve MongoDB authentification using Kerberos we will need three virtual Ubuntu machines inside VirtualBox each with a distinct ip address with roles as follow:
+In order to achieve MySQL authentification using Kerberos we will need three virtual Ubuntu machines inside VirtualBox each with a distinct ip address with roles as follow:
 
 - Client
 - KDC
@@ -167,10 +167,15 @@ sudo apt-get install mysql-server
   ```
 During the installation process, you will be prompted to set a password for the MySQL root user.
 
-To enable kerberos authentication we need to edit **/etc/mysql/my.cnf** file where we add the following to identify the keytab used for **kerberos** authentication
+To enable kerberos authentication we need to edit **/etc/mysql/my.cnf** file where we add the following .
+
 ![](screenshots/my_cnf_file.png)
 
 ![](screenshots/kerberos_auth_setup.png)
+
+Note that we make use of the plugin **auth_gssapi_server_iso** offered by MySQL in GSSAPI mode. Using GSSAPI, the MySQL server creates a Kerberos server-side authentication session. The server validates the user identity and the validity of the user request.
+
+Note also that you need to include the location of the file that contains the security credentials that MySQL needs to authenticate itself to the Kerberos server. By configuring MySQL to use Kerberos authentication in this way, users can connect to the MySQL server without transmitting their passwords, making the connection more secure.
 
 In order for changes to take place we need to run `sudo systemctl restart mysql`
 
@@ -179,13 +184,11 @@ We can check the status of our service by the following :`sudo systemctl status 
 ![](screenshots/mysql_status.png)
 
 
-## Contributing
+## BookMarks
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+[Video tutorial](https://www.youtube.com/watch?v=vx2vIA2Ym14)
 
-Please make sure to update tests as appropriate.
+[Kerberos Pluggable Authentication](https://dev.mysql.com/doc/mysql-security-excerpt/8.0/en/kerberos-pluggable-authentication.html)
 
-## License
+[Installing and Uninstalling Plugins](https://dev.mysql.com/doc/refman/8.0/en/plugin-loading.html)
 
-[MIT](https://choosealicense.com/licenses/mit/)
